@@ -3,7 +3,9 @@ import Header from "../components/Header"
 import Banner from "../components/Banner"
 import Smallcard from "../components/Smallcard";
 import Mediumcard from "../components/Mediumcard";
+import Largecard from "../components/Largecard";
 import medcard from "../sources/medcard.json"
+import Footer from "../components/Footer";
 
 export default function Home({exploreData} : {exploreData:any}) {
   return (
@@ -38,7 +40,7 @@ export default function Home({exploreData} : {exploreData:any}) {
 
       <section>
         <h2 className="text-4xl font-semibold py-8">Live Anywhere</h2>
-        <div className="flex space-x-3 overflow-scroll">
+        <div className="flex space-x-3 overflow-scroll scrollbar-hide p-3 -ml-3">
            {medcard?.map((item: any) => (
         <Mediumcard
         key={item.img}
@@ -46,10 +48,21 @@ export default function Home({exploreData} : {exploreData:any}) {
         />
           ))} 
         </div>
-       
       </section>
 
+      {/* Large Card */}
+           <Largecard 
+            img="https://links.papareact.com/4cj"
+            title="The Greatest Outdoors"
+            description="Wihslist curated by Airbnb"
+            buttonText="Get Inspired"
+            />
+ 
        </main>
+
+       {/* Footer */}
+       <Footer/>
+       
     </div>
   )
 }
