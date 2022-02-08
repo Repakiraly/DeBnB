@@ -4,11 +4,41 @@ import SearchIcon from '@mui/icons-material/Search';
 import LanguageIcon from '@mui/icons-material/Language';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import GroupIcon from '@mui/icons-material/Group';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRangePicker } from 'react-date-range';
 
+interface selectionRangeInterface {
+  key: string;
+  startDate: Date;
+  endDate: Date;
+
+}
 
 
 function Header() {
   const [searchInput, setSearchInput] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [numberOfGuests, setNumberOfGuests ] = useState(1);
+
+  const handleSelect = (ranges: any) => {
+    console.log(ranges)
+    setStartDate(ranges.selection.startDate)
+    setEndDate(ranges.selection.endDate)
+  }
+
+  // const handleGuest = ()
+
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: 'selection'
+  }
+
+ 
 
   console.log(searchInput)
 
@@ -46,7 +76,25 @@ function Header() {
         </div>
       </div>
 
-      {searchInput && <h1>Hello WOrld</h1>}
+      {searchInput && (
+        <div className='flex flex-col col-span-3 mx-auto'>
+          <DateRangePicker
+          ranges={[selectionRange]}
+          minDate={new Date()}
+          rangeColors={["#FF5A5F"]}
+          onChange={handleSelect}
+          />
+          <div className='flex items-center border-b mb-4'>
+            <h2 className='text-2xl flex-grow font-semibold '>Number of Guests</h2>
+            <PeopleAltIcon className="h-8"/>
+            <input 
+            value={numberOfGuests}
+            onChange={(e) => setNumberOfGuests(parseInt(e.target.value))}
+            type="number" 
+            className='w-12 pl-2 text-lg outline-none text-red-400'/>
+          </div>
+        </div>
+      )}
       
       
       </header>;
