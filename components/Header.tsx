@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState }from 'react';
 import Image from 'next/image';
 import SearchIcon from '@mui/icons-material/Search';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -8,6 +8,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 
 function Header() {
+  const [searchInput, setSearchInput] = useState("");
+
+  console.log(searchInput)
+
   return <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-5 md:px-10 ">
       
       {/* left */}
@@ -22,7 +26,10 @@ function Header() {
       {/* Middle - search */}
       <div className=" flex items-center lg:border-2 rounded-full py-2 lg:shadow-sm">
           
-          <input className="grow pl-5 bg-transparent outline-none text-gray-600 placeholder-gray-400" type="text" placeholder="Start your search"
+          <input 
+          value = {searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          className="grow pl-5 bg-transparent outline-none text-gray-600 placeholder-gray-400" type="text" placeholder="Start your search"
           />
           <SearchIcon className="hidden lg:inline-flex  h-8 w-8 cursor-pointer bg-red-400 text-white rounded-full p-2 mx-2"/>
       
@@ -38,6 +45,9 @@ function Header() {
           
         </div>
       </div>
+
+      {searchInput && <h1>Hello WOrld</h1>}
+      
       
       </header>;
 }
