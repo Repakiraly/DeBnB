@@ -6,12 +6,14 @@ import Mediumcard from "../components/Mediumcard";
 import Largecard from "../components/Largecard";
 import medcard from "../sources/medcard.json"
 import Footer from "../components/Footer";
+import "typeface-montserrat";
+
 
 export default function Home({exploreData} : {exploreData:any}) {
   return (
     <div className="">
       <Head>
-        <title>Airbnb</title>
+        <title>Debnb</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
     
@@ -54,7 +56,7 @@ export default function Home({exploreData} : {exploreData:any}) {
            <Largecard 
             img="https://links.papareact.com/4cj"
             title="The Greatest Outdoors"
-            description="Wihslist curated by Airbnb"
+            description="Wishlist curated by Debnb"
             buttonText="Get Inspired"
             />
  

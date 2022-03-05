@@ -5,10 +5,10 @@ import LanguageIcon from '@mui/icons-material/Language';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import GroupIcon from '@mui/icons-material/Group';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
+import { useRouter } from 'next/router';
 
 interface selectionRangeInterface {
   key: string;
@@ -17,12 +17,17 @@ interface selectionRangeInterface {
 
 }
 
+interface placeholderInterface {
+  placeholder: string;
+}
 
-function Header() {
+
+function Header({placeholder}:placeholderInterface) {
   const [searchInput, setSearchInput] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [numberOfGuests, setNumberOfGuests ] = useState(1);
+  const router = useRouter();
 
   const handleSelect = (ranges: any) => {
     console.log(ranges)
@@ -30,7 +35,7 @@ function Header() {
     setEndDate(ranges.selection.endDate)
   }
 
-  // const handleGuest = ()
+  // const handleGuest = () it is a mock .json now because the original website didn't load
 
   const selectionRange = {
     startDate: startDate,
@@ -38,19 +43,35 @@ function Header() {
     key: 'selection'
   }
 
- 
+  const resetInput = () => {
+    setSearchInput("");
+  }
 
-  console.log(searchInput)
+  const search = () => {
+    router.push({
+      pathname: '/search',
+      query: {
+        location: searchInput,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        numberOfGuests: numberOfGuests
+      }
+    })
+  }
+
+
 
   return <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-5 md:px-10 ">
       
       {/* left */}
-      <div className="relative flex items-center h-10 cursor-pointer my-auto">
+      <div onClick={() => router.push("/")} className="relative flex items-center h-12 cursor-pointer my-auto">
         <Image
-            src='https://links.papareact.com/qd3'
+            src='/../public/logo.svg'
+            // height={100} width={100}
             layout='fill'
             objectFit='contain' objectPosition="left"
         />
+        <h4 className='hidden lg:inline-flex px-12 text-xl text-slate-900 font-black'>debnb</h4>
       </div>
 
       {/* Middle - search */}
@@ -59,9 +80,9 @@ function Header() {
           <input 
           value = {searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="grow pl-5 bg-transparent outline-none text-gray-600 placeholder-gray-400" type="text" placeholder="Start your search"
+          className="grow pl-5 bg-transparent outline-none text-gray-600 placeholder-gray-400" type="text" placeholder={placeholder || "Start your search"}
           />
-          <SearchIcon className="hidden lg:inline-flex  h-8 w-8 cursor-pointer bg-red-400 text-white rounded-full p-2 mx-2"/>
+          <SearchIcon className="hidden lg:inline-flex  h-8 w-8 cursor-pointer bg-slate-900 text-white rounded-full p-2 mx-2"/>
       
       </div>
       
@@ -81,7 +102,7 @@ function Header() {
           <DateRangePicker
           ranges={[selectionRange]}
           minDate={new Date()}
-          rangeColors={["#FF5A5F"]}
+          rangeColors={["#000000"]}
           onChange={handleSelect}
           />
           <div className='flex items-center border-b mb-4'>
@@ -91,7 +112,12 @@ function Header() {
             value={numberOfGuests}
             onChange={(e) => setNumberOfGuests(parseInt(e.target.value))}
             type="number" 
-            className='w-12 pl-2 text-lg outline-none text-red-400'/>
+            min={1}
+            className='w-12 pl-2 text-lg outline-none text-slate-900'/>
+          </div>
+          <div className='flex '>
+            <button onClick={resetInput} className='flex-grow text-gray-500'>Cancel</button>
+            <button onClick={search}className='flex-grow text-slate-900 font-semibold'>Search</button>
           </div>
         </div>
       )}
