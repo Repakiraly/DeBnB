@@ -18,7 +18,7 @@ interface selectionRangeInterface {
 }
 
 interface placeholderInterface {
-  placeholder: string;
+  placeholder?: string;
 }
 
 
